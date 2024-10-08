@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { readInputFile } from "./helpers";
 import { restoreLocally, saveLocally } from "./persistence";
 import { FindYourFriends, parseFindYourFriendsJson } from "./types";
+import { Header } from "./header";
 
 enum Sorts {
   DEFAULT = "default",
@@ -58,7 +59,7 @@ export function App() {
     });
   }, [sort, filteredItems]);
 
-  const onButtonClick = () => {
+  const onImportClick = () => {
     if (!inputRef.current) {
       return;
     }
@@ -107,7 +108,7 @@ export function App() {
           onInput={onFileChange}
           style={{ display: "none" }}
         />
-        <button onClick={onButtonClick}>
+        <button onClick={onImportClick}>
           Import your find-your-friends.json file
         </button>
       </div>
@@ -139,52 +140,68 @@ export function App() {
   };
 
   if (!friends) {
-    return <div class="app">{renderEmptyContent()}</div>;
+    return (
+      <div class="app">
+        <Header
+          friends={friends}
+          onFileChange={onFileChange}
+          onImportclick={onImportClick}
+          inputRef={inputRef}
+        ></Header>
+      </div>
+    );
   }
 
   return (
     <div class="app">
-      <div class="reset-control">
-        <button onClick={onButtonClick}>
-          Import another find-your-friends.json file
-        </button>
-      </div>
-      <div class="controls-container">
-        <label htmlFor="contactsSort">
-          Sort by:{" "}
-          <select
-            name="contactsSort"
-            id="contactsSort"
-            onChange={(e) => {
-              setSort((e.target as HTMLSelectElement).value as Sorts);
-            }}
-          >
-            <option checked={sort === Sorts.DEFAULT} value={Sorts.DEFAULT}>
-              Default
-            </option>
-            <option checked={sort === Sorts.HANDLE} value={Sorts.HANDLE}>
-              Handle (A-Z)
-            </option>
-            <option
-              checked={sort === Sorts.DISPLAY_NAME}
-              value={Sorts.DISPLAY_NAME}
+      <Header
+        friends={friends}
+        onFileChange={onFileChange}
+        onImportclick={onImportClick}
+        inputRef={inputRef}
+      >
+        <div class="reset-control">
+          <button onClick={onImportClick}>
+            Import another find-your-friends.json file
+          </button>
+        </div>
+        <div class="controls-container">
+          <label htmlFor="contactsSort">
+            Sort by:{" "}
+            <select
+              name="contactsSort"
+              id="contactsSort"
+              onChange={(e) => {
+                setSort((e.target as HTMLSelectElement).value as Sorts);
+              }}
             >
-              Display Name (A-Z)
-            </option>
-          </select>
-        </label>
-        <label htmlFor="contactsSearch">
-          Filter (works on all fields):{" "}
-          <input
-            id="contactsSearch"
-            type="search"
-            value={searchQuery}
-            onInput={(e) =>
-              setSearchQuery((e.target as HTMLInputElement).value)
-            }
-          />
-        </label>
-      </div>
+              <option checked={sort === Sorts.DEFAULT} value={Sorts.DEFAULT}>
+                Default
+              </option>
+              <option checked={sort === Sorts.HANDLE} value={Sorts.HANDLE}>
+                Handle (A-Z)
+              </option>
+              <option
+                checked={sort === Sorts.DISPLAY_NAME}
+                value={Sorts.DISPLAY_NAME}
+              >
+                Display Name (A-Z)
+              </option>
+            </select>
+          </label>
+          <label htmlFor="contactsSearch">
+            Filter (works on all fields):{" "}
+            <input
+              id="contactsSearch"
+              type="search"
+              value={searchQuery}
+              onInput={(e) =>
+                setSearchQuery((e.target as HTMLInputElement).value)
+              }
+            />
+          </label>
+        </div>
+      </Header>
 
       <div class="contacts">
         {sortedItems.map((friend) => {

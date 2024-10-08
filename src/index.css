@@ -212,4 +212,16 @@ footer a,
 
 .reset-control {
   text-align: center;
+  margin: 20px 0;
+}
+
+header {
+  background-color: var(--cherry);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  --linkColor: var(--mango);
+}
+
+header h1 {
+  margin-top: 0;
 }
