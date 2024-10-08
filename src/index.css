@@ -8,7 +8,7 @@
   --mango: #ffab5c;
   --longan: #ffd8a8;
 
-  font-family: system-ui, sans-serif;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -125,10 +125,8 @@ button:hover {
 }
 
 .contact-block {
-  box-shadow:
-    0px 4px 5px rgba(25, 25, 25, 0.14),
-    0px 1px 10px rgba(25, 25, 25, 0.12),
-    0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 5px rgba(25, 25, 25, 0.14),
+    0px 1px 10px rgba(25, 25, 25, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
@@ -139,10 +137,8 @@ button:hover {
 
 @media (prefers-color-scheme: dark) {
   .contact-block {
-    box-shadow:
-      0px 4px 5px rgba(0, 0, 0, 0.14),
-      0px 1px 10px rgba(0, 0, 0, 0.12),
-      0px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14),
+      0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
     background-color: black;
     border-color: rgb(74 72 71);
   }
