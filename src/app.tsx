@@ -115,6 +115,30 @@ export function App() {
     );
   };
 
+  const renderContactLink = (
+    contactLink: FindYourFriends[number]["contactCard"][number]
+  ) => {
+    try {
+      const parsedUrl = new URL(contactLink.value);
+
+      return (
+        <>
+          <h5>{contactLink.service}</h5>
+          <a href={parsedUrl.toString()} target="_blank" rel="noopener">
+            {contactLink.value}
+          </a>
+        </>
+      );
+    } catch (e) {
+      return (
+        <>
+          <h5>{contactLink.service}</h5>
+          {contactLink.value}
+        </>
+      );
+    }
+  };
+
   if (!friends) {
     return <div class="app">{renderEmptyContent()}</div>;
   }
@@ -171,12 +195,22 @@ export function App() {
                 <tr class="contact-table-line">
                   <td class="contact-table-line-meta">
                     <h3 class="contact-header">
-                      <a href={`https://cohost.org/${friend.handle}`}>
+                      <a
+                        href={`https://cohost.org/${friend.handle}`}
+                        target="_blank"
+                        rel="noopener"
+                      >
                         {friend.displayName} @{friend.handle}
                       </a>
                     </h3>
                     <span class="contact-url">
-                      <a href={friend.url ?? "#"}>{friend.url ?? ""}</a>
+                      <a
+                        href={friend.url ?? "#"}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {friend.url ?? ""}
+                      </a>
                     </span>
                   </td>
                   <td class="contact-table-line-links">
@@ -187,14 +221,7 @@ export function App() {
                             class="contact-link"
                             key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
                           >
-                            <h5>{contact.service}</h5>
-                            <a
-                              href={contact.value}
-                              target="_blank"
-                              rel="noopener"
-                            >
-                              {contact.value}
-                            </a>
+                            {renderContactLink(contact)}
                           </li>
                         );
                       })}
