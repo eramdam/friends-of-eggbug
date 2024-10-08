@@ -20,6 +20,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#app {
+  width: 100vw;
+  height: 100vh;
+}
+
 a {
   color: var(--mango);
   text-decoration: inherit;
@@ -73,8 +78,10 @@ button:focus-visible {
 }
 
 .contacts {
+  max-width: 80vw;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: row;
   gap: 10px;
   width: 100vw;
   align-items: flex-start;
@@ -85,14 +92,25 @@ button:focus-visible {
   border-radius: 10px;
   padding: 10px;
   display: grid;
-  grid-auto-flow: row;
+  grid-template-areas:
+    "header"
+    "url"
+    "links";
   gap: 10px;
+  align-items: flex-start;
+}
+
+.contact-header {
+  grid-area: header;
+}
+
+.contact-url {
+  grid-area: url;
 }
 
 .contact-links {
+  grid-area: links;
   list-style-type: none;
-  display: grid;
-  grid-auto-flow: row;
   gap: 10px;
 }
 
