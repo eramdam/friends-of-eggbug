@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export function Header(props: PropsWithChildren<HeaderProps>) {
   if (
-    props.friends &&
+    !props.friends &&
     props.onImportclick &&
     props.onFileChange &&
     props.inputRef
