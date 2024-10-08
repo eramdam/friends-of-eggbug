@@ -121,12 +121,15 @@ button:hover {
   gap: 5px;
 }
 
+.contact-links:empty::after {
+  content: "no contact links";
+  font-style: italic;
+  opacity: 0.7;
+}
+
 .contact-link {
-  /* text-overflow: ellipsis; */
   word-break: break-word;
   text-wrap: balance;
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
 }
 
 .contact-header a {
