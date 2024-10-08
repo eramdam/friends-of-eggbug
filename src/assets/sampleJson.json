@@ -1,0 +1,39 @@
+[
+  {
+    "contactCard": [
+      {
+        "value": "https://damien.zone",
+        "service": "My blog (with RSS!)",
+        "visibility": "public"
+      },
+      {
+        "value": "https://social.erambert.me/@eramdam",
+        "service": "on Mastodon (paste it into the search of your Mastodon client)",
+        "visibility": "public"
+      },
+      {
+        "value": "https://bsky.app/profile/eramdam.me",
+        "service": "Bluesky (😔)",
+        "visibility": "public"
+      },
+      {
+        "value": "https://twitter.com/eramdam",
+        "service": "Twitter (locked, feel free to ask but don't get upset if i refuse)",
+        "visibility": "public"
+      },
+      {
+        "value": "eramdam",
+        "service": "Discord (please make sure I can tell who you are/were)",
+        "visibility": "follows"
+      },
+      {
+        "value": "https://erambert.me",
+        "service": "everything else",
+        "visibility": "public"
+      }
+    ],
+    "displayName": "Damien",
+    "handle": "eramdam",
+    "url": "http://erambert.me/"
+  }
+]
