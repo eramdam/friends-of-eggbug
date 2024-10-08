@@ -81,7 +81,7 @@ button:hover {
   margin: 0 auto;
   width: 100%;
   border-collapse: collapse;
-  color: var(--notWhite);
+  color: var(--notBlack);
 }
 
 @media (max-width: 1300px) {
@@ -96,7 +96,16 @@ button:hover {
 
 .contact-table-line > td {
   padding: 10px;
-  background-color: var(--cherry);
+  background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .contacts {
+    color: var(--notWhite);
+  }
+  .contact-table-line > td {
+    background-color: black;
+  }
 }
 
 .contact-table-line > td:first-child {
