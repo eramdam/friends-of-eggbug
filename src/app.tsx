@@ -1,5 +1,5 @@
 import { TargetedEvent } from "preact/compat";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 import { readInputFile } from "./helpers";
 import { FindYourFriends, parseFindYourFriendsJson } from "./types";
@@ -9,6 +9,7 @@ export function App() {
   const [friends, setFriends] = useState<FindYourFriends | undefined>(
     undefined
   );
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     if (friends) {
       return;
@@ -21,6 +22,22 @@ export function App() {
     }
   }, [friends]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const filteredItems = useMemo(() => {
+    return (friends || [])?.filter((f) => {
+      const fields = [
+        f.handle,
+        f.displayName,
+        f.url,
+        ...f.contactCard.flatMap((e) => {
+          return [e.service, e.value];
+        }),
+      ]
+        .filter(Boolean)
+        .map((f) => f?.toLowerCase());
+      return fields.some((f) => f.includes(searchQuery.toLowerCase()));
+    });
+  }, [friends, searchQuery]);
 
   const onButtonClick = () => {
     if (!inputRef.current) {
@@ -67,9 +84,22 @@ export function App() {
 
   return (
     <div class="app">
+      <div class="search-container">
+        <label htmlFor="contactsSearch">
+          Search:{" "}
+          <input
+            id="contactsSearch"
+            type="search"
+            value={searchQuery}
+            onInput={(e) =>
+              setSearchQuery((e.target as HTMLInputElement).value)
+            }
+          />
+        </label>
+      </div>
       <table class="contacts">
         <tbody>
-          {friends.map((friend) => {
+          {filteredItems.map((friend) => {
             return (
               <Fragment key={`friend-${friend.handle}`}>
                 <tr class="contact-table-line">
