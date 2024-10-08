@@ -20,6 +20,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --linkColor: var(--cherry);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --linkColor: var(--strawberry);
+  }
 }
 
 #app {
@@ -28,9 +36,10 @@
 }
 
 a {
-  color: var(--mango);
+  color: var(--linkColor);
   text-decoration: inherit;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -56,7 +65,7 @@ h1 {
 button {
   display: inline-block;
   padding: 0.5rem 1rem;
-  color: var(--cherry);
+  color: var(--linkColor);
   border: 2px solid currentColor;
   border-radius: 9999px;
   font-weight: 700;
@@ -66,7 +75,7 @@ button {
 
 button:hover {
   color: var(--notWhite);
-  background-color: var(--cherry);
+  background-color: var(--linkColor);
 }
 
 @media (prefers-color-scheme: light) {
@@ -82,6 +91,9 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   color: var(--notBlack);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 @media (max-width: 1300px) {
@@ -90,48 +102,47 @@ button:hover {
   }
 }
 
-.contacts tr.spacer {
-  height: 10px;
-}
-
-.contact-table-line > td {
-  padding: 10px;
-  background-color: white;
-}
-
 @media (prefers-color-scheme: dark) {
   .contacts {
     color: var(--notWhite);
   }
-  .contact-table-line > td {
-    background-color: black;
-  }
-}
-
-.contact-table-line > td:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-.contact-table-line > td:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.contact-table-line-meta {
-  vertical-align: top;
 }
 
 .contact-links {
   list-style-type: none;
   display: grid;
-  row-gap: 6px;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  row-gap: 24px;
+  padding: 14px 14px;
+}
+
+.contact-block {
+  box-shadow:
+    0px 4px 5px rgba(25, 25, 25, 0.14),
+    0px 1px 10px rgba(25, 25, 25, 0.12),
+    0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(222, 217, 211);
+  background-color: white;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .contact-block {
+    box-shadow:
+      0px 4px 5px rgba(0, 0, 0, 0.14),
+      0px 1px 10px rgba(0, 0, 0, 0.12),
+      0px 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: black;
+    border-color: rgb(74 72 71);
+  }
 }
 
 .contact-links:empty::after {
-  content: "no contact links";
+  content: "no contact links or URL";
   font-style: italic;
   opacity: 0.7;
 }
@@ -139,6 +150,19 @@ button:hover {
 .contact-link {
   word-break: break-word;
   text-wrap: balance;
+}
+
+.contact-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgb(222, 217, 211);
+  background-color: var(--notWhite);
+}
+
+@media (prefers-color-scheme: dark) {
+  .contact-header {
+    border-bottom: 1px solid rgb(74 72 71);
+    background-color: var(--notBlack);
+  }
 }
 
 .contact-header a {
@@ -181,7 +205,7 @@ footer {
 
 footer a,
 .text a {
-  color: var(--cherry);
+  color: var(--linkColor);
   font-weight: bold;
 }
 

@@ -187,45 +187,56 @@ export function App() {
         </label>
       </div>
 
-      <table class="contacts">
+      <div class="contacts">
+        {sortedItems.map((friend) => {
+          return (
+            <div key={`friend-${friend.handle}`} class="contact-block">
+              <h3 class="contact-header">
+                <a
+                  href={`https://cohost.org/${friend.handle}`}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {friend.displayName} @{friend.handle}
+                </a>
+              </h3>
+
+              <ul class="contact-links">
+                {friend.url && (
+                  <li class="contact-link">
+                    <h5>url</h5>
+                    <a href={friend.url ?? "#"} target="_blank" rel="noopener">
+                      {friend.url ?? ""}
+                    </a>
+                  </li>
+                )}
+                {friend.contactCard.map((contact, index) => {
+                  return (
+                    <li
+                      class="contact-link"
+                      key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
+                    >
+                      {renderContactLink(contact)}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* <table class="contacts">
         <tbody>
           {sortedItems.map((friend) => {
             return (
               <Fragment key={`friend-${friend.handle}`}>
                 <tr class="contact-table-line">
                   <td class="contact-table-line-meta">
-                    <h3 class="contact-header">
-                      <a
-                        href={`https://cohost.org/${friend.handle}`}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {friend.displayName} @{friend.handle}
-                      </a>
-                    </h3>
-                    <span class="contact-url">
-                      <a
-                        href={friend.url ?? "#"}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {friend.url ?? ""}
-                      </a>
-                    </span>
+                    
                   </td>
                   <td class="contact-table-line-links">
-                    <ul class="contact-links">
-                      {friend.contactCard.map((contact, index) => {
-                        return (
-                          <li
-                            class="contact-link"
-                            key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
-                          >
-                            {renderContactLink(contact)}
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    
                   </td>
                 </tr>
                 <tr class="spacer"></tr>
@@ -233,7 +244,7 @@ export function App() {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }
