@@ -109,7 +109,7 @@ export function App() {
           style={{ display: "none" }}
         />
         <button onClick={onButtonClick}>
-          Import your friends-your-friends.json file
+          Import your find-your-friends.json file
         </button>
       </div>
     );
@@ -123,7 +123,7 @@ export function App() {
     <div class="app">
       <div class="reset-control">
         <button onClick={onButtonClick}>
-          Import another friends-your-friends.json file
+          Import another find-your-friends.json file
         </button>
       </div>
       <div class="controls-container">
