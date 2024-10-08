@@ -85,7 +85,22 @@ export function App() {
   const renderEmptyContent = () => {
     return (
       <div class="starting">
-        <h2>Friends of eggbug visualizer</h2>
+        <div class="text">
+          <p>
+            This is a simple tool to easily filter through/visualize your
+            "find-your-friends.json" file you got from your{" "}
+            <a href="https://cohost.org">cohost</a> data export.
+          </p>
+          <p>
+            Your data is <strong>not transmitted anywhere</strong>, and will be
+            saved in your browser's storage so you can come back to this page
+            later on.
+          </p>
+          <p>
+            Just click the button below, select your `find-your-friends.json`
+            file on your computer, and you're done!
+          </p>
+        </div>
         <input
           ref={inputRef}
           type="file"
@@ -101,17 +116,16 @@ export function App() {
   };
 
   if (!friends) {
-    return (
-      <div class="app">
-        <h1>Friends of Eggbug visualizer</h1>
-        {renderEmptyContent()}
-      </div>
-    );
+    return <div class="app">{renderEmptyContent()}</div>;
   }
 
   return (
     <div class="app">
-      <h1>Friends of Eggbug visualizer</h1>
+      <div class="reset-control">
+        <button onClick={onButtonClick}>
+          Import another friends-your-friends.json file
+        </button>
+      </div>
       <div class="controls-container">
         <label htmlFor="contactsSort">
           Sort by:{" "}

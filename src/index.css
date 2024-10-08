@@ -81,6 +81,7 @@ button:hover {
   margin: 0 auto;
   width: 100%;
   border-collapse: collapse;
+  color: var(--notWhite);
 }
 
 @media (max-width: 1300px) {
@@ -141,6 +142,12 @@ button:hover {
   padding: 10px 0;
 }
 
+.starting .text {
+  text-align: left;
+  max-width: 60ch;
+  margin: 10px 0;
+}
+
 .controls-container {
   text-align: center;
   font-size: 120%;
@@ -150,7 +157,21 @@ button:hover {
   justify-content: center;
 }
 
-.app h1 {
+main h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
+}
+
+footer {
+  text-align: center;
+}
+
+footer a,
+.text a {
+  color: var(--cherry);
+  font-weight: bold;
+}
+
+.reset-control {
+  text-align: center;
 }
