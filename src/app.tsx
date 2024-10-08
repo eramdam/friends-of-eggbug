@@ -16,7 +16,7 @@ export function App() {
     undefined
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [sort, setSort] = useState<Sorts>(Sorts.DEFAULT);
+  const [sorting, setSort] = useState<Sorts>(Sorts.DEFAULT);
   useEffect(() => {
     if (friends) {
       return;
@@ -30,34 +30,33 @@ export function App() {
   }, [friends]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filteredItems = useMemo(() => {
-    return (friends || [])?.filter((f) => {
-      const fields = [
-        f.handle,
-        f.displayName,
-        f.url,
-        ...f.contactCard.flatMap((e) => {
-          return [e.service, e.value];
-        }),
-      ]
-        .filter(Boolean)
-        .map((f) => f?.toLowerCase());
-      return fields.some((f) => f.includes(searchQuery.toLowerCase()));
-    });
-  }, [friends, searchQuery]);
-  const sortedItems = useMemo(() => {
-    if (sort === Sorts.DEFAULT) {
-      return filteredItems;
-    }
+  const displayedItems = useMemo(() => {
+    return (friends || [])
+      ?.filter((f) => {
+        const fields = [
+          f.handle,
+          f.displayName,
+          f.url,
+          ...f.contactCard.flatMap((e) => {
+            return [e.service, e.value];
+          }),
+        ]
+          .filter(Boolean)
+          .map((f) => f?.toLowerCase());
+        return fields.some((f) => f.includes(searchQuery.toLowerCase()));
+      })
+      .sort((a, b) => {
+        if (sorting === Sorts.DEFAULT) {
+          return 0;
+        }
 
-    return [...filteredItems].sort((a, b) => {
-      if (sort === Sorts.DISPLAY_NAME) {
-        return a.displayName.localeCompare(b.displayName);
-      }
+        if (sorting === Sorts.DISPLAY_NAME) {
+          return a.displayName.localeCompare(b.displayName);
+        }
 
-      return a.handle.localeCompare(b.handle);
-    });
-  }, [sort, filteredItems]);
+        return a.handle.localeCompare(b.handle);
+      });
+  }, [friends, searchQuery, sorting]);
 
   const onImportClick = () => {
     if (!inputRef.current) {
@@ -136,14 +135,14 @@ export function App() {
                 setSort((e.target as HTMLSelectElement).value as Sorts);
               }}
             >
-              <option checked={sort === Sorts.DEFAULT} value={Sorts.DEFAULT}>
+              <option checked={sorting === Sorts.DEFAULT} value={Sorts.DEFAULT}>
                 Default
               </option>
-              <option checked={sort === Sorts.HANDLE} value={Sorts.HANDLE}>
+              <option checked={sorting === Sorts.HANDLE} value={Sorts.HANDLE}>
                 Handle (A-Z)
               </option>
               <option
-                checked={sort === Sorts.DISPLAY_NAME}
+                checked={sorting === Sorts.DISPLAY_NAME}
                 value={Sorts.DISPLAY_NAME}
               >
                 Display Name (A-Z)
@@ -165,7 +164,7 @@ export function App() {
       </Header>
 
       <div class="contacts">
-        {sortedItems.map((friend) => {
+        {displayedItems.map((friend) => {
           return (
             <div key={`friend-${friend.handle}`} class="contact-block">
               <h3 class="contact-header">
