@@ -1,3 +1,5 @@
+@import "node_modules/modern-normalize/modern-normalize.css";
+
 :root {
   --notBlack: #191919;
   --notWhite: #fff9f2;
@@ -80,36 +82,38 @@ button:focus-visible {
 .contacts {
   max-width: 80vw;
   margin: 0 auto;
-  gap: 10px;
-  width: 100vw;
-  display: grid;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.contact {
-  background-color: var(--cherry);
-  border-radius: 10px;
+.contacts tr.spacer {
+  height: 10px;
+}
+
+.contact-table-line > td {
   padding: 10px;
-  display: grid;
-  grid-template-areas:
-    "header"
-    "url"
-    "links";
-  gap: 10px;
-  align-items: flex-start;
+  background-color: var(--cherry);
 }
 
-.contact-header {
-  grid-area: header;
+.contact-table-line > td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
-.contact-url {
-  grid-area: url;
+.contact-table-line > td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.contact-table-line-meta {
+  vertical-align: top;
 }
 
 .contact-links {
-  grid-area: links;
   list-style-type: none;
-  gap: 10px;
+  display: grid;
+  row-gap: 6px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .contact-header a {

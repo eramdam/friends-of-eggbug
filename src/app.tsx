@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import sampleData from "./assets/sampleJson.json";
+import { Fragment } from "preact/jsx-runtime";
 
 type FindYourFriends = ReadonlyArray<Friend>;
 
@@ -38,36 +39,46 @@ export function App() {
   }
 
   return (
-    <div className="app">
-      <div className="contacts">
+    <div class="app">
+      <table class="contacts">
         {friends.map((friend) => {
           return (
-            <div class="contact" key={friend.handle}>
-              <h3 class="contact-header">
-                <a href={`https://cohost.org/${friend.handle}`}>
-                  {friend.displayName} @{friend.handle}
-                </a>
-              </h3>
-              <span class="contact-url">
-                <a href={friend.url ?? "#"}>{friend.url ?? ""}</a>
-              </span>
-
-              <ul class="contact-links">
-                {friend.contactCard.map((contact) => {
-                  return (
-                    <li class="contact-link" key={contact.value}>
-                      <h5>{contact.service}</h5>
-                      <a href={contact.value} target="_blank" rel="noopener">
-                        {contact.value}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <Fragment key={friend.handle}>
+              <tr class="contact-table-line">
+                <td class="contact-table-line-meta">
+                  <h3 class="contact-header">
+                    <a href={`https://cohost.org/${friend.handle}`}>
+                      {friend.displayName} @{friend.handle}
+                    </a>
+                  </h3>
+                  <span class="contact-url">
+                    <a href={friend.url ?? "#"}>{friend.url ?? ""}</a>
+                  </span>
+                </td>
+                <td class="contact-table-line-links">
+                  <ul class="contact-links">
+                    {friend.contactCard.map((contact) => {
+                      return (
+                        <li class="contact-link" key={contact.value}>
+                          <h5>{contact.service}</h5>
+                          <a
+                            href={contact.value}
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            {contact.value}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </td>
+              </tr>
+              <tr class="spacer"></tr>
+            </Fragment>
           );
         })}
-      </div>
+      </table>
     </div>
   );
 }
