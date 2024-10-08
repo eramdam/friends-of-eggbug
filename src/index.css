@@ -185,15 +185,6 @@ button:hover {
   margin: 10px 0;
 }
 
-.controls-container {
-  text-align: center;
-  font-size: 120%;
-  padding: 10px 0;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
 main h1 {
   text-align: center;
   margin: 20px 0;
@@ -220,6 +211,15 @@ header {
   padding-top: 20px;
   padding-bottom: 20px;
   --linkColor: var(--mango);
+}
+
+.controls-container {
+  text-align: center;
+  font-size: 120%;
+  padding: 10px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 header h1 {
