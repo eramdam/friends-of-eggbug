@@ -203,26 +203,6 @@ export function App() {
           );
         })}
       </div>
-
-      {/* <table class="contacts">
-        <tbody>
-          {sortedItems.map((friend) => {
-            return (
-              <Fragment key={`friend-${friend.handle}`}>
-                <tr class="contact-table-line">
-                  <td class="contact-table-line-meta">
-                    
-                  </td>
-                  <td class="contact-table-line-links">
-                    
-                  </td>
-                </tr>
-                <tr class="spacer"></tr>
-              </Fragment>
-            );
-          })}
-        </tbody>
-      </table> */}
     </div>
   );
 }
