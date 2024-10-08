@@ -1,6 +1,5 @@
 import { useState } from "preact/hooks";
 import sampleData from "./assets/sampleJson.json";
-import "./app.css";
 
 type FindYourFriends = ReadonlyArray<Friend>;
 
@@ -43,36 +42,35 @@ export function App() {
 
   return (
     <div className="app">
-      <table class="contacts-list">
-        <thead>
-          <td>display name / handle</td>
-          <td>url</td>
-          <td>other links</td>
-        </thead>
-        <tbody>
-          {friends.map((friend) => {
-            return (
-              <tr key={friend.handle}>
-                <td>
+      <div className="contacts">
+        {friends.map((friend) => {
+          return (
+            <div class="contact" key={friend.handle}>
+              <h3 class="contact-header">
+                <a href={`https://cohost.org/${friend.handle}`}>
                   {friend.displayName} @{friend.handle}
-                </td>
-                <td>{friend.url}</td>
-                <td>
-                  <ul>
-                    {friend.contactCard.map((contact) => {
-                      return (
-                        <li key={contact.value}>
-                          {contact.service} {contact.value}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                </a>
+              </h3>
+              <span class="contact-url">
+                <a href={friend.url ?? "#"}>{friend.url ?? ""}</a>
+              </span>
+
+              <ul class="contact-links">
+                {friend.contactCard.map((contact) => {
+                  return (
+                    <li class="contact-link" key={contact.value}>
+                      <h5>{contact.service}</h5>
+                      <a href={contact.value} target="_blank" rel="noopener">
+                        {contact.value}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

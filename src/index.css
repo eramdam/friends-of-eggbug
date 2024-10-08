@@ -1,11 +1,18 @@
 :root {
+  --notBlack: #191919;
+  --notWhite: #fff9f2;
+  --cherry: #83254f;
+  --strawberry: #e56b6f;
+  --mango: #ffab5c;
+  --longan: #ffd8a8;
+
   font-family: system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--notWhite);
+  background-color: var(--notBlack);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,12 +21,11 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  color: var(--mango);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  text-decoration: underline;
 }
 
 body {
@@ -61,13 +67,38 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--notBlack);
+    background-color: var(--notWhite);
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+.contacts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100vw;
+  align-items: flex-start;
+}
+
+.contact {
+  background-color: var(--cherry);
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+}
+
+.contact-links {
+  list-style-type: none;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+}
+
+.contact-header a {
+  color: inherit;
+}
+
+.contact-link {
 }
