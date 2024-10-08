@@ -118,7 +118,7 @@ button:hover {
   padding: 14px 14px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .contact-links {
     grid-template-columns: repeat(2, 1fr);
   }
