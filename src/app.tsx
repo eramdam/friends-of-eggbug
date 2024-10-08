@@ -110,7 +110,6 @@ export function App() {
     return (
       <div class="app">
         <Header
-          friends={friends}
           onFileChange={onFileChange}
           onImportclick={onImportClick}
           inputRef={inputRef}

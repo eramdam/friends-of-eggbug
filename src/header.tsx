@@ -2,19 +2,13 @@ import { PropsWithChildren, RefObject, TargetedEvent } from "preact/compat";
 import { FindYourFriends } from "./types";
 
 interface HeaderProps {
-  friends?: FindYourFriends | undefined;
   onImportclick?: () => void;
   onFileChange?: (e: TargetedEvent<HTMLInputElement, Event>) => void;
   inputRef?: RefObject<HTMLInputElement>;
 }
 
 export function Header(props: PropsWithChildren<HeaderProps>) {
-  if (
-    !props.friends &&
-    props.onImportclick &&
-    props.onFileChange &&
-    props.inputRef
-  ) {
+  if (props.onImportclick && props.onFileChange && props.inputRef) {
     return (
       <header>
         <h1>Friends of eggbug visualizer</h1>
