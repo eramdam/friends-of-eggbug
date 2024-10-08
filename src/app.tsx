@@ -24,12 +24,9 @@ export enum Visibility {
 }
 
 export function App() {
-  const [friends, setFriends] = useState<FindYourFriends | undefined>([
-    ...sampleData,
-    ...sampleData,
-    ...sampleData,
-    ...sampleData,
-  ] as FindYourFriends);
+  const [friends, setFriends] = useState<FindYourFriends | undefined>(
+    sampleData as FindYourFriends
+  );
   console.log(friends);
 
   if (!friends) {
