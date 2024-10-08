@@ -83,6 +83,12 @@ button:hover {
   border-collapse: collapse;
 }
 
+@media (max-width: 1300px) {
+  .contacts {
+    max-width: 95vw;
+  }
+}
+
 .contacts tr.spacer {
   height: 10px;
 }
@@ -111,6 +117,15 @@ button:hover {
   display: grid;
   row-gap: 6px;
   grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+
+.contact-link {
+  /* text-overflow: ellipsis; */
+  word-break: break-word;
+  text-wrap: balance;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
 }
 
 .contact-header a {
@@ -126,8 +141,16 @@ button:hover {
   padding: 10px 0;
 }
 
-.search-container {
+.controls-container {
   text-align: center;
   font-size: 120%;
   padding: 10px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.app h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
