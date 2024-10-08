@@ -80,11 +80,9 @@ button:focus-visible {
 .contacts {
   max-width: 80vw;
   margin: 0 auto;
-  display: grid;
-  grid-auto-flow: row;
   gap: 10px;
   width: 100vw;
-  align-items: flex-start;
+  display: grid;
 }
 
 .contact {
