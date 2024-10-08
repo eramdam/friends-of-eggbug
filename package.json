@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.1.0",
     "modern-normalize": "^3.0.1",
     "preact": "^10.24.1",
     "zod": "^3.23.8"

@@ -3,6 +3,11 @@ import { render } from "preact";
 import { App } from "./app.tsx";
 import "./index.css";
 
+import "@fontsource/atkinson-hyperlegible/400.css";
+import "@fontsource/atkinson-hyperlegible/700.css";
+import "@fontsource/atkinson-hyperlegible/400-italic.css";
+import "@fontsource/atkinson-hyperlegible/700-italic.css";
+
 render(
   <main>
     <App />
