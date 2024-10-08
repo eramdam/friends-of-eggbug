@@ -120,6 +120,13 @@ export function App() {
   return (
     <div class="app">
       <Header>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="application/json"
+          onInput={onFileChange}
+          style={{ display: "none" }}
+        />
         <div class="reset-control">
           <button onClick={onImportClick}>
             Import another find-your-friends.json file
