@@ -217,6 +217,8 @@ header {
   padding-top: 20px;
   padding-bottom: 20px;
   --linkColor: var(--mango);
+  color: var(--notWhite);
+  color-scheme: light;
 }
 
 .controls-container {
