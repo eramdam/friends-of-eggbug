@@ -5,11 +5,18 @@ import { readInputFile } from "./helpers";
 import { FindYourFriends, parseFindYourFriendsJson } from "./types";
 import { restoreLocally, saveLocally } from "./persistence";
 
+enum Sorts {
+  DEFAULT = "default",
+  HANDLE = "handle",
+  DISPLAY_NAME = "displayName",
+}
+
 export function App() {
   const [friends, setFriends] = useState<FindYourFriends | undefined>(
     undefined
   );
   const [searchQuery, setSearchQuery] = useState("");
+  const [sort, setSort] = useState<Sorts>(Sorts.DEFAULT);
   useEffect(() => {
     if (friends) {
       return;
@@ -38,6 +45,19 @@ export function App() {
       return fields.some((f) => f.includes(searchQuery.toLowerCase()));
     });
   }, [friends, searchQuery]);
+  const sortedItems = useMemo(() => {
+    if (sort === Sorts.DEFAULT) {
+      return filteredItems;
+    }
+
+    return [...filteredItems].sort((a, b) => {
+      if (sort === Sorts.DISPLAY_NAME) {
+        return a.displayName.localeCompare(b.displayName);
+      }
+
+      return a.handle.localeCompare(b.handle);
+    });
+  }, [sort, filteredItems]);
 
   const onButtonClick = () => {
     if (!inputRef.current) {
@@ -62,31 +82,62 @@ export function App() {
     }
   };
 
+  const renderEmptyContent = () => {
+    return (
+      <div class="starting">
+        <h2>Friends of eggbug visualizer</h2>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="application/json"
+          onInput={onFileChange}
+          style={{ display: "none" }}
+        />
+        <button onClick={onButtonClick}>
+          Import your friends-your-friends.json file
+        </button>
+      </div>
+    );
+  };
+
   if (!friends) {
     return (
       <div class="app">
-        <div class="starting">
-          <h2>Friends of eggbug visualizer</h2>
-          <input
-            ref={inputRef}
-            type="file"
-            accept="application/json"
-            onInput={onFileChange}
-            style={{ display: "none" }}
-          />
-          <button onClick={onButtonClick}>
-            Import your friends-your-friends.json file
-          </button>
-        </div>
+        <h1>Friends of Eggbug visualizer</h1>
+        {renderEmptyContent()}
       </div>
     );
   }
 
   return (
     <div class="app">
-      <div class="search-container">
+      <h1>Friends of Eggbug visualizer</h1>
+      <div class="controls-container">
+        <label htmlFor="contactsSort">
+          Sort by:{" "}
+          <select
+            name="contactsSort"
+            id="contactsSort"
+            onChange={(e) => {
+              setSort((e.target as HTMLSelectElement).value as Sorts);
+            }}
+          >
+            <option checked={sort === Sorts.DEFAULT} value={Sorts.DEFAULT}>
+              Default
+            </option>
+            <option checked={sort === Sorts.HANDLE} value={Sorts.HANDLE}>
+              Handle (A-Z)
+            </option>
+            <option
+              checked={sort === Sorts.DISPLAY_NAME}
+              value={Sorts.DISPLAY_NAME}
+            >
+              Display Name (A-Z)
+            </option>
+          </select>
+        </label>
         <label htmlFor="contactsSearch">
-          Search:{" "}
+          Filter (works on all fields):{" "}
           <input
             id="contactsSearch"
             type="search"
@@ -97,9 +148,10 @@ export function App() {
           />
         </label>
       </div>
+
       <table class="contacts">
         <tbody>
-          {filteredItems.map((friend) => {
+          {sortedItems.map((friend) => {
             return (
               <Fragment key={`friend-${friend.handle}`}>
                 <tr class="contact-table-line">
