@@ -1,5 +1,4 @@
 import { PropsWithChildren, RefObject, TargetedEvent } from "preact/compat";
-import { FindYourFriends } from "./types";
 
 interface HeaderProps {
   onImportclick?: () => void;
