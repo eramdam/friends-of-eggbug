@@ -5,7 +5,7 @@ import "./index.css";
 
 render(
   <main>
-    <h1>Friends of Eggbug visualizer</h1>
+    <h1>Friends of eggbug visualizer</h1>
     <App />
     <footer>
       <p>
