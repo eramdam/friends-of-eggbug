@@ -54,22 +54,19 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: var(--cherry);
+  border: 2px solid currentColor;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-align: center;
+  background-color: transparent;
 }
+
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  color: var(--notWhite);
+  background-color: var(--cherry);
 }
 
 @media (prefers-color-scheme: light) {
@@ -120,5 +117,11 @@ button:focus-visible {
   color: inherit;
 }
 
-.contact-link {
+.starting {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
 }
