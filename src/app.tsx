@@ -1,9 +1,10 @@
 import { TargetedEvent } from "preact/compat";
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
-import { readInputFile } from "./helpers";
-import { restoreLocally, saveLocally } from "./persistence";
-import { FindYourFriends, parseFindYourFriendsJson } from "./types";
-import { Header } from "./header";
+import { useMemo, useRef, useState } from "preact/hooks";
+import { ContactBlock } from "./components/contactBlock";
+import { Header } from "./components/header";
+import { readInputFile } from "./helpers/helpers";
+import { resetChecks, setFriends, useFOEStore } from "./helpers/store";
+import { parseFindYourFriendsJson } from "./helpers/types";
 
 enum Sorts {
   DEFAULT = "default",
@@ -12,22 +13,9 @@ enum Sorts {
 }
 
 export function App() {
-  const [friends, setFriends] = useState<FindYourFriends | undefined>(
-    undefined,
-  );
+  const friends = useFOEStore((state) => state.friends);
   const [searchQuery, setSearchQuery] = useState("");
   const [sorting, setSort] = useState<Sorts>(Sorts.DEFAULT);
-  useEffect(() => {
-    if (friends) {
-      return;
-    }
-
-    const local = restoreLocally();
-
-    if (local) {
-      setFriends(local);
-    }
-  }, [friends]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const displayedItems = useMemo(() => {
@@ -75,33 +63,8 @@ export function App() {
     try {
       const parsedFriends = parseFindYourFriendsJson(raw);
       setFriends(parsedFriends);
-      saveLocally(parsedFriends);
     } catch (e) {
       alert(e);
-    }
-  };
-
-  const renderContactLink = (
-    contactLink: FindYourFriends[number]["contactCard"][number],
-  ) => {
-    try {
-      const parsedUrl = new URL(contactLink.value);
-
-      return (
-        <>
-          <h5>{contactLink.service}</h5>
-          <a href={parsedUrl.toString()} target="_blank" rel="noopener">
-            {contactLink.value}
-          </a>
-        </>
-      );
-    } catch (e) {
-      return (
-        <>
-          <h5>{contactLink.service}</h5>
-          {contactLink.value}
-        </>
-      );
     }
   };
 
@@ -130,6 +93,17 @@ export function App() {
         <div class="reset-control">
           <button onClick={onImportClick}>
             Import another find-your-friends.json file
+          </button>
+          <button
+            onClick={() => {
+              if (
+                confirm("Are you sure you want to reset all the checkboxes?")
+              ) {
+                resetChecks();
+              }
+            }}
+          >
+            Reset checkboxes
           </button>
         </div>
         <div class="controls-container">
@@ -173,38 +147,10 @@ export function App() {
       <div class="contacts">
         {displayedItems.map((friend) => {
           return (
-            <div key={`friend-${friend.handle}`} class="contact-block">
-              <h3 class="contact-header">
-                <a
-                  href={`https://cohost.org/${friend.handle}`}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {friend.displayName} @{friend.handle}
-                </a>
-              </h3>
-
-              <ul class="contact-links">
-                {friend.url && (
-                  <li class="contact-link">
-                    <h5>url</h5>
-                    <a href={friend.url ?? "#"} target="_blank" rel="noopener">
-                      {friend.url ?? ""}
-                    </a>
-                  </li>
-                )}
-                {friend.contactCard.map((contact, index) => {
-                  return (
-                    <li
-                      class="contact-link"
-                      key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
-                    >
-                      {renderContactLink(contact)}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <ContactBlock
+              friend={friend}
+              key={`friend-${friend.handle}`}
+            ></ContactBlock>
           );
         })}
       </div>

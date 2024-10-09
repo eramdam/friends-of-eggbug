@@ -24,6 +24,7 @@ const findYourFriendsSchema = z.array(
 );
 
 export type FindYourFriends = z.infer<typeof findYourFriendsSchema>;
+export type Friend = FindYourFriends[number];
 
 export function parseFindYourFriendsJson(raw: string) {
   try {

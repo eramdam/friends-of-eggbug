@@ -76,6 +76,7 @@ button {
 button:hover {
   color: var(--notWhite);
   background-color: var(--linkColor);
+  border-color: var(--linkColor);
 }
 
 @media (prefers-color-scheme: light) {
@@ -163,6 +164,24 @@ button:hover {
   padding: 10px 14px;
   border-bottom: 1px solid rgb(222, 217, 211);
   background-color: var(--notWhite);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-header:only-child {
+  border-bottom: none;
+}
+
+.contact-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  font-size: smaller;
+  font-style: italic;
+  user-select: none;
+  color: color-mix(in srgb, currentColor 60%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -208,7 +227,9 @@ footer a,
 }
 
 .reset-control {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin: 20px 0;
 }
 
