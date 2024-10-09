@@ -1,9 +1,9 @@
 import { TargetedEvent } from "preact/compat";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
-import { readInputFile } from "./helpers";
-import { restoreLocally, saveLocally } from "./persistence";
-import { FindYourFriends, parseFindYourFriendsJson } from "./types";
-import { Header } from "./header";
+import { readInputFile } from "./helpers/helpers";
+import { restoreLocally, saveLocally } from "./helpers/persistence";
+import { FindYourFriends, parseFindYourFriendsJson } from "./helpers/types";
+import { Header } from "./components/header";
 
 enum Sorts {
   DEFAULT = "default",
