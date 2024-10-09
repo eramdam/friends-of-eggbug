@@ -28,18 +28,25 @@ export function ContactBlock(props: ContactBlockProps) {
       );
     }
   };
+  const inputId = `friend-${friend.handle}-input`;
 
   return (
     <div class="contact-block">
-      <h3 class="contact-header">
-        <a
-          href={`https://cohost.org/${friend.handle}`}
-          target="_blank"
-          rel="noopener"
-        >
-          {friend.displayName} @{friend.handle}
-        </a>
-      </h3>
+      <div class="contact-header">
+        <h3>
+          <a
+            href={`https://cohost.org/${friend.handle}`}
+            target="_blank"
+            rel="noopener"
+          >
+            {friend.displayName} @{friend.handle}
+          </a>
+        </h3>
+        <label class="contact-checkbox" htmlFor={inputId}>
+          seen
+          <input type="checkbox" id={inputId} />
+        </label>
+      </div>
 
       <ul class="contact-links">
         {friend.url && (

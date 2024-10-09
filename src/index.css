@@ -163,6 +163,20 @@ button:hover {
   padding: 10px 14px;
   border-bottom: 1px solid rgb(222, 217, 211);
   background-color: var(--notWhite);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  font-size: smaller;
+  font-style: italic;
+  user-select: none;
+  color: color-mix(in srgb, currentColor 60%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
