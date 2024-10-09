@@ -1,3 +1,4 @@
+import { checkFriend, useFOEStore } from "../helpers/store";
 import { Friend } from "../helpers/types";
 
 interface ContactBlockProps {
@@ -6,6 +7,7 @@ interface ContactBlockProps {
 
 export function ContactBlock(props: ContactBlockProps) {
   const { friend } = props;
+  const isChecked = useFOEStore((state) => state.checkedFriends[friend.handle]);
 
   const renderContactLink = (contactLink: Friend["contactCard"][number]) => {
     try {
@@ -44,30 +46,39 @@ export function ContactBlock(props: ContactBlockProps) {
         </h3>
         <label class="contact-checkbox" htmlFor={inputId}>
           seen
-          <input type="checkbox" id={inputId} />
+          <input
+            type="checkbox"
+            id={inputId}
+            checked={isChecked}
+            onClick={() => {
+              checkFriend(friend, !isChecked);
+            }}
+          />
         </label>
       </div>
 
-      <ul class="contact-links">
-        {friend.url && (
-          <li class="contact-link">
-            <h5>url</h5>
-            <a href={friend.url ?? "#"} target="_blank" rel="noopener">
-              {friend.url ?? ""}
-            </a>
-          </li>
-        )}
-        {friend.contactCard.map((contact, index) => {
-          return (
-            <li
-              class="contact-link"
-              key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
-            >
-              {renderContactLink(contact)}
+      {!isChecked && (
+        <ul class="contact-links">
+          {friend.url && (
+            <li class="contact-link">
+              <h5>url</h5>
+              <a href={friend.url ?? "#"} target="_blank" rel="noopener">
+                {friend.url ?? ""}
+              </a>
             </li>
-          );
-        })}
-      </ul>
+          )}
+          {friend.contactCard.map((contact, index) => {
+            return (
+              <li
+                class="contact-link"
+                key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
+              >
+                {renderContactLink(contact)}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

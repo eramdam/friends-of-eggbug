@@ -1,10 +1,10 @@
 import { TargetedEvent } from "preact/compat";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
-import { readInputFile } from "./helpers/helpers";
-import { restoreLocally, saveLocally } from "./helpers/persistence";
-import { FindYourFriends, parseFindYourFriendsJson } from "./helpers/types";
-import { Header } from "./components/header";
 import { ContactBlock } from "./components/contactBlock";
+import { Header } from "./components/header";
+import { readInputFile } from "./helpers/helpers";
+import { setFriends, useFOEStore } from "./helpers/store";
+import { parseFindYourFriendsJson } from "./helpers/types";
 
 enum Sorts {
   DEFAULT = "default",
@@ -13,22 +13,9 @@ enum Sorts {
 }
 
 export function App() {
-  const [friends, setFriends] = useState<FindYourFriends | undefined>(
-    undefined,
-  );
+  const friends = useFOEStore((state) => state.friends);
   const [searchQuery, setSearchQuery] = useState("");
   const [sorting, setSort] = useState<Sorts>(Sorts.DEFAULT);
-  useEffect(() => {
-    if (friends) {
-      return;
-    }
-
-    const local = restoreLocally();
-
-    if (local) {
-      setFriends(local);
-    }
-  }, [friends]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const displayedItems = useMemo(() => {
@@ -76,7 +63,6 @@ export function App() {
     try {
       const parsedFriends = parseFindYourFriendsJson(raw);
       setFriends(parsedFriends);
-      saveLocally(parsedFriends);
     } catch (e) {
       alert(e);
     }

@@ -168,6 +168,10 @@ button:hover {
   justify-content: space-between;
 }
 
+.contact-header:only-child {
+  border-bottom: none;
+}
+
 .contact-checkbox {
   display: flex;
   align-items: center;
