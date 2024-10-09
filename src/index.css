@@ -174,14 +174,21 @@ button:hover {
 }
 
 .contact-checkbox {
+  flex-grow: 1;
+  flex-shrink: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   text-transform: uppercase;
   font-size: smaller;
   font-style: italic;
   user-select: none;
   color: color-mix(in srgb, currentColor 60%, transparent);
+}
+
+.contact-checkbox:hover {
+  color: currentColor;
 }
 
 @media (prefers-color-scheme: dark) {
