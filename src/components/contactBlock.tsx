@@ -7,7 +7,9 @@ interface ContactBlockProps {
 
 export function ContactBlock(props: ContactBlockProps) {
   const { friend } = props;
-  const isChecked = useFOEStore((state) => state.checkedFriends[friend.handle]);
+  const isChecked = useFOEStore(
+    (state) => state.checkedFriends[friend.handle] ?? false,
+  );
 
   const renderContactLink = (contactLink: Friend["contactCard"][number]) => {
     try {

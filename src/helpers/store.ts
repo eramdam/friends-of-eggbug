@@ -40,3 +40,12 @@ export function checkFriend(friend: Friend, bool: boolean) {
     };
   });
 }
+
+export function resetChecks() {
+  useFOEStore.setState((state) => {
+    return {
+      ...state,
+      checkedFriends: {},
+    };
+  });
+}

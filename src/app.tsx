@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { ContactBlock } from "./components/contactBlock";
 import { Header } from "./components/header";
 import { readInputFile } from "./helpers/helpers";
-import { setFriends, useFOEStore } from "./helpers/store";
+import { resetChecks, setFriends, useFOEStore } from "./helpers/store";
 import { parseFindYourFriendsJson } from "./helpers/types";
 
 enum Sorts {
@@ -93,6 +93,17 @@ export function App() {
         <div class="reset-control">
           <button onClick={onImportClick}>
             Import another find-your-friends.json file
+          </button>
+          <button
+            onClick={() => {
+              if (
+                confirm("Are you sure you want to reset all the checkboxes?")
+              ) {
+                resetChecks();
+              }
+            }}
+          >
+            Reset checkboxes
           </button>
         </div>
         <div class="controls-container">
