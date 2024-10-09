@@ -13,7 +13,7 @@ enum Sorts {
 
 export function App() {
   const [friends, setFriends] = useState<FindYourFriends | undefined>(
-    undefined
+    undefined,
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [sorting, setSort] = useState<Sorts>(Sorts.DEFAULT);
@@ -82,7 +82,7 @@ export function App() {
   };
 
   const renderContactLink = (
-    contactLink: FindYourFriends[number]["contactCard"][number]
+    contactLink: FindYourFriends[number]["contactCard"][number],
   ) => {
     try {
       const parsedUrl = new URL(contactLink.value);

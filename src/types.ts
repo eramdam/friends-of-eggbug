@@ -15,12 +15,12 @@ const findYourFriendsSchema = z.array(
         value: z.string(),
         service: z.string(),
         visibility: VisibilityEnum,
-      })
+      }),
     ),
     displayName: z.string(),
     handle: z.string(),
     url: z.nullable(z.string()),
-  })
+  }),
 );
 
 export type FindYourFriends = z.infer<typeof findYourFriendsSchema>;

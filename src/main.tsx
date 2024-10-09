@@ -21,5 +21,5 @@ render(
       </p>
     </footer>
   </main>,
-  document.getElementById("app")!
+  document.getElementById("app")!,
 );
