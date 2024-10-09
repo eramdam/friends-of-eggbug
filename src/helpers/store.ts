@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { restoreLocally } from "./persistence";
 import { FindYourFriends, Friend } from "./types";
 

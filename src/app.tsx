@@ -1,5 +1,5 @@
 import { TargetedEvent } from "preact/compat";
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useMemo, useRef, useState } from "preact/hooks";
 import { ContactBlock } from "./components/contactBlock";
 import { Header } from "./components/header";
 import { readInputFile } from "./helpers/helpers";
