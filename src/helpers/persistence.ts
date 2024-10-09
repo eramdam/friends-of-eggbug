@@ -1,4 +1,4 @@
-import { FindYourFriends, parseFindYourFriendsJson } from "../types";
+import { FindYourFriends, parseFindYourFriendsJson } from "./types";
 
 const LOCAL_KEY = "findyourfriends-eggbug";
 export function saveLocally(friends: FindYourFriends) {

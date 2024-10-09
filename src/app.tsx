@@ -4,6 +4,7 @@ import { readInputFile } from "./helpers/helpers";
 import { restoreLocally, saveLocally } from "./helpers/persistence";
 import { FindYourFriends, parseFindYourFriendsJson } from "./helpers/types";
 import { Header } from "./components/header";
+import { ContactBlock } from "./components/contactBlock";
 
 enum Sorts {
   DEFAULT = "default",
@@ -81,30 +82,6 @@ export function App() {
     }
   };
 
-  const renderContactLink = (
-    contactLink: FindYourFriends[number]["contactCard"][number],
-  ) => {
-    try {
-      const parsedUrl = new URL(contactLink.value);
-
-      return (
-        <>
-          <h5>{contactLink.service}</h5>
-          <a href={parsedUrl.toString()} target="_blank" rel="noopener">
-            {contactLink.value}
-          </a>
-        </>
-      );
-    } catch (e) {
-      return (
-        <>
-          <h5>{contactLink.service}</h5>
-          {contactLink.value}
-        </>
-      );
-    }
-  };
-
   if (!friends) {
     return (
       <div class="app">
@@ -173,38 +150,10 @@ export function App() {
       <div class="contacts">
         {displayedItems.map((friend) => {
           return (
-            <div key={`friend-${friend.handle}`} class="contact-block">
-              <h3 class="contact-header">
-                <a
-                  href={`https://cohost.org/${friend.handle}`}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {friend.displayName} @{friend.handle}
-                </a>
-              </h3>
-
-              <ul class="contact-links">
-                {friend.url && (
-                  <li class="contact-link">
-                    <h5>url</h5>
-                    <a href={friend.url ?? "#"} target="_blank" rel="noopener">
-                      {friend.url ?? ""}
-                    </a>
-                  </li>
-                )}
-                {friend.contactCard.map((contact, index) => {
-                  return (
-                    <li
-                      class="contact-link"
-                      key={`contact-link-${contact.value}-${contact.service}-${contact.visibility}-${index}`}
-                    >
-                      {renderContactLink(contact)}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <ContactBlock
+              friend={friend}
+              key={`friend-${friend.handle}`}
+            ></ContactBlock>
           );
         })}
       </div>
