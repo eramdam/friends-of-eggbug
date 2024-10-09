@@ -37,6 +37,14 @@ export function ContactBlock(props: ContactBlockProps) {
   return (
     <div class="contact-block">
       <div class="contact-header">
+        <img
+          src={`http://5.78.79.214:5555/avatar?handle=${friend.handle}`}
+          alt=""
+          height={30}
+          width={30}
+          loading={"lazy"}
+          decoding={"async"}
+        />
         <h3>
           <a
             href={`https://cohost.org/${friend.handle}`}

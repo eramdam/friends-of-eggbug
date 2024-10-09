@@ -167,6 +167,14 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+}
+
+.contact-header img {
+  border-radius: 6px;
+  object-fit: cover;
+  height: 30px;
+  width: 30px;
 }
 
 .contact-header:only-child {
