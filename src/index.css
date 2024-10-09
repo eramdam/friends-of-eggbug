@@ -76,6 +76,7 @@ button {
 button:hover {
   color: var(--notWhite);
   background-color: var(--linkColor);
+  border-color: var(--linkColor);
 }
 
 @media (prefers-color-scheme: light) {
