@@ -38,7 +38,7 @@ export function ContactBlock(props: ContactBlockProps) {
     <div class="contact-block">
       <div class="contact-header">
         <img
-          src={`http://5.78.79.214:5555/avatar?handle=${friend.handle}`}
+          src={`https://cohost-avatar-proxy.vercel.app/avatar/${friend.handle}`}
           alt=""
           height={30}
           width={30}
