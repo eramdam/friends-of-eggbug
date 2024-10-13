@@ -24,6 +24,13 @@
   --linkColor: var(--cherry);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    color: var(--notBlack);
+    background-color: var(--notWhite);
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --linkColor: var(--strawberry);
@@ -77,13 +84,6 @@ button:hover {
   color: var(--notWhite);
   background-color: var(--linkColor);
   border-color: var(--linkColor);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--notBlack);
-    background-color: var(--notWhite);
-  }
 }
 
 .contacts {
