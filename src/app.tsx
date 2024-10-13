@@ -17,6 +17,10 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sorting, setSort] = useState<Sorts>(Sorts.DEFAULT);
   const inputRef = useRef<HTMLInputElement>(null);
+  const numberChecked = useFOEStore(
+    (state) =>
+      Object.values(state.checkedFriends).filter((b) => b === true).length,
+  );
 
   const displayedItems = useMemo(() => {
     return (friends || [])
@@ -103,7 +107,7 @@ export function App() {
               }
             }}
           >
-            Reset checkboxes
+            Reset checkboxes ({numberChecked}/{friends.length})
           </button>
         </div>
         <div class="controls-container">
