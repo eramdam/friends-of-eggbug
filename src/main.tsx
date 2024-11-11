@@ -8,11 +8,28 @@ import { render } from "preact";
 import { App } from "./app.tsx";
 
 import { Migrator } from "./components/migrator.tsx";
+import { useState } from "preact/compat";
 
 function Main() {
+  const [showBanner, setShowBanner] = useState(false);
+
   return (
     <main>
-      <Migrator onMigrate={() => {}} />
+      {showBanner ? (
+        <div class="migration-banner">
+          This tool now lives on{" "}
+          <a href="https://friends-of-eggbug.erambert.me">
+            friends-of-eggbug.erambert.me
+          </a>
+          . Please update your bookmarks, your data should have been migrated.
+        </div>
+      ) : null}
+      <Migrator
+        onHasMigrated={() => {
+          console.log("onHasMigrated");
+          setShowBanner(true);
+        }}
+      />
       <App />
       <footer>
         <p>

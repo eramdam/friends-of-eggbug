@@ -275,3 +275,17 @@ header {
 header h1 {
   margin-top: 0;
 }
+
+.migration-banner {
+  background-color: #ffd9a8;
+  color: var(--notBlack);
+  padding: 10px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.migration-banner a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: underline;
+}

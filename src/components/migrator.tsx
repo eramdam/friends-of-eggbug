@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 
 const MESSAGE_STORAGE_KEY = "migrator-message";
 
-export function Migrator(props: { onMigrate: () => void }) {
+export function Migrator(props: { onHasMigrated: () => void }) {
   const isInIframe = window.top !== window.self;
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [hideIframe, setHideIframe] = useState(false);
+  const messageHandler = useRef<(e: MessageEvent) => void | null>(null);
 
   const onIframeLoad = useCallback(() => {
     if (!isInIframe) {
@@ -20,11 +20,7 @@ export function Migrator(props: { onMigrate: () => void }) {
   }, []);
 
   useEffect(() => {
-    if (!isInIframe) {
-      return;
-    }
-
-    window.addEventListener("message", (event) => {
+    messageHandler.current = (event: MessageEvent) => {
       if (event.data.type !== MESSAGE_STORAGE_KEY) {
         console.log("Not the right message type, skipping");
         return;
@@ -35,18 +31,34 @@ export function Migrator(props: { onMigrate: () => void }) {
 
       if (Object.entries(existingStorage).length > 0) {
         console.log("Storage already exists, skipping");
+        props.onHasMigrated();
         return;
       }
 
       console.log("Restoring data");
       localStorage.setItem("bear-storage", JSON.stringify(event.data.data));
-      setHideIframe(true);
-      props.onMigrate();
-    });
-  });
+      props.onHasMigrated();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!isInIframe) {
+      return;
+    }
+
+    const onMessage = (event: MessageEvent) => {
+      messageHandler.current?.(event);
+    };
+
+    window.addEventListener("message", onMessage);
+
+    return () => {
+      window.removeEventListener("message", onMessage);
+    };
+  }, []);
 
   // Don't render when already inside an iframe.
-  if (isInIframe || hideIframe) {
+  if (isInIframe) {
     return null;
   }
 
