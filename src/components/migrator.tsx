@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from "preact/hooks";
+import { useCallback, useLayoutEffect, useRef, useState } from "preact/hooks";
 
 const MESSAGE_STORAGE_KEY = "migrator-message";
+const MESSAGE_STORAGE_RESPONSE_KEY = "migrator-message-response";
 
 export function Migrator(props: { onHasMigrated: () => void }) {
   const isInIframe = window.top !== window.self;
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const messageHandler = useRef<(e: MessageEvent) => void | null>(null);
+  const [hideIframe, setHideIframe] = useState(false);
 
-  const onIframeLoad = useCallback(() => {
+  const onIframeLoad = () => {
     if (!isInIframe) {
       iframeRef.current?.contentWindow?.postMessage(
         {
@@ -17,10 +18,37 @@ export function Migrator(props: { onHasMigrated: () => void }) {
         "*",
       );
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    messageHandler.current = (event: MessageEvent) => {
+  useLayoutEffect(() => {
+    if (isInIframe) {
+      return;
+    }
+
+    // Will run in the parent context.
+    const onMessage = (event: MessageEvent) => {
+      if (event.data.type !== MESSAGE_STORAGE_RESPONSE_KEY) {
+        return;
+      }
+
+      if (event.data.data.hasMigrated) {
+        props.onHasMigrated();
+        setHideIframe(true);
+      }
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("message", onMessage);
+    };
+  });
+
+  useLayoutEffect(() => {
+    if (!isInIframe) {
+      return;
+    }
+
+    const onMessage = (event: MessageEvent) => {
       if (event.data.type !== MESSAGE_STORAGE_KEY) {
         console.log("Not the right message type, skipping");
         return;
@@ -31,23 +59,19 @@ export function Migrator(props: { onHasMigrated: () => void }) {
 
       if (Object.entries(existingStorage).length > 0) {
         console.log("Storage already exists, skipping");
-        props.onHasMigrated();
+        window.top?.postMessage(
+          { type: MESSAGE_STORAGE_RESPONSE_KEY, data: { hasMigrated: true } },
+          "*",
+        );
         return;
       }
 
       console.log("Restoring data");
       localStorage.setItem("bear-storage", JSON.stringify(event.data.data));
-      props.onHasMigrated();
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!isInIframe) {
-      return;
-    }
-
-    const onMessage = (event: MessageEvent) => {
-      messageHandler.current?.(event);
+      window.top?.postMessage(
+        { type: MESSAGE_STORAGE_RESPONSE_KEY, data: { hasMigrated: true } },
+        "*",
+      );
     };
 
     window.addEventListener("message", onMessage);
@@ -57,8 +81,8 @@ export function Migrator(props: { onHasMigrated: () => void }) {
     };
   }, []);
 
-  // Don't render when already inside an iframe.
-  if (isInIframe) {
+  // Don't render when already inside an iframe or if the iframe should be hidden.
+  if (isInIframe || hideIframe) {
     return null;
   }
 
