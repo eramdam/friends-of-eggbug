@@ -9,21 +9,46 @@ import { App } from "./app.tsx";
 
 import { Migrator } from "./components/migrator.tsx";
 import { useState } from "preact/compat";
+import { useFOEStore } from "./helpers/store.ts";
 
 function Main() {
   const [showBanner, setShowBanner] = useState(false);
+  const friends = useFOEStore((state) => state.friends);
+
+  function maybeShowBanner() {
+    if (!showBanner) {
+      return null;
+    }
+
+    const mainPart = (
+      <>
+        This page now lives on{" "}
+        <a href="https://friends-of-eggbug.erambert.me">
+          friends-of-eggbug.erambert.me
+        </a>{" "}
+        and will redirect soon.
+      </>
+    );
+
+    if (friends?.length) {
+      return (
+        <div class="migration-banner">
+          {mainPart} Please update your bookmarks, your data should have been
+          migrated.
+        </div>
+      );
+    }
+
+    return (
+      <div class="migration-banner">
+        {mainPart} Please update your bookmarks.
+      </div>
+    );
+  }
 
   return (
     <main>
-      {showBanner ? (
-        <div class="migration-banner">
-          This tool now lives on{" "}
-          <a href="https://friends-of-eggbug.erambert.me">
-            friends-of-eggbug.erambert.me
-          </a>
-          . Please update your bookmarks, your data should have been migrated.
-        </div>
-      ) : null}
+      {maybeShowBanner()}
       <Migrator
         onHasMigrated={() => {
           console.log("onHasMigrated");
