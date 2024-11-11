@@ -44,10 +44,11 @@ export function Migrator(props: { onHasMigrated: () => void }) {
   });
 
   useLayoutEffect(() => {
-    if (!isInIframe) {
+    if (!isInIframe || !window.top) {
       return;
     }
 
+    // Should run inside the iframe.
     const onMessage = (event: MessageEvent) => {
       if (event.data.type !== MESSAGE_STORAGE_KEY) {
         console.log("Not the right message type, skipping");
