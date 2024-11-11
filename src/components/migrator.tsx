@@ -6,7 +6,9 @@ const MESSAGE_STORAGE_RESPONSE_KEY = "migrator-message-response";
 export function Migrator(props: { onHasMigrated: () => void }) {
   const isInIframe = window.top !== window.self;
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [hideIframe, setHideIframe] = useState(false);
+  const [hideIframe, setHideIframe] = useState(() => {
+    return window.location.host === "friends-of-eggbug.erambert.me";
+  });
 
   const onIframeLoad = () => {
     if (!isInIframe) {
@@ -90,7 +92,7 @@ export function Migrator(props: { onHasMigrated: () => void }) {
   return (
     <iframe
       ref={iframeRef}
-      src="http://test.localhost:5174/"
+      src="https://friends-of-eggbug.erambert.me/"
       onLoad={onIframeLoad}
       style={{ pointerEvents: "none", opacity: 0, position: "absolute" }}
     ></iframe>
