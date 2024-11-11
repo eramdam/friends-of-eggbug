@@ -92,7 +92,7 @@ export function Migrator(props: { onHasMigrated: () => void }) {
   return (
     <iframe
       ref={iframeRef}
-      src="https://friends-of-eggbug.erambert.me/"
+      src="https://deploy-preview-6--friends-of-eggbug.netlify.app/"
       onLoad={onIframeLoad}
       style={{ pointerEvents: "none", opacity: 0, position: "absolute" }}
     ></iframe>
