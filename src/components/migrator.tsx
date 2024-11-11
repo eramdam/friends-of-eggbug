@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { useLayoutEffect, useRef, useState } from "preact/hooks";
 
 const MESSAGE_STORAGE_KEY = "migrator-message";
 const MESSAGE_STORAGE_RESPONSE_KEY = "migrator-message-response";
