@@ -5,6 +5,10 @@ interface ContactBlockProps {
   friend: Friend;
 }
 
+const avatarCutoff = new Date(`2024-12-31T00:00:00.000+00:00`);
+const now = new Date();
+const shouldShowAvatars = now <= avatarCutoff;
+
 export function ContactBlock(props: ContactBlockProps) {
   const { friend } = props;
   const isChecked = useFOEStore(
@@ -37,14 +41,16 @@ export function ContactBlock(props: ContactBlockProps) {
   return (
     <div class="contact-block">
       <div class="contact-header">
-        <img
-          src={`https://cohost-avatar-proxy.erambert.me/avatar/${friend.handle}`}
-          alt=""
-          height={30}
-          width={30}
-          loading={"lazy"}
-          decoding={"async"}
-        />
+        {shouldShowAvatars && (
+          <img
+            src={`https://cohost-avatar-proxy.erambert.me/avatar/${friend.handle}`}
+            alt=""
+            height={30}
+            width={30}
+            loading={"lazy"}
+            decoding={"async"}
+          />
+        )}
         <h3>
           <a
             href={`https://cohost.org/${friend.handle}`}
